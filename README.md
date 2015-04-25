@@ -4,30 +4,34 @@ This is a git extension that merges a pull request or topic branch via rebasing
 so as to avoid a merge commit. To merge a PR or branch, the script does the
 following:
 
-1. Fetch the latest `master` from the remote repository and reset your local
-   `master` to match it.
+1. Fetch the latest `target` from the `remote` repository and reset your local
+   `target` to match it.
 2. Check out the pull request or topic branch.
-3. Start an interactive rebase of the PR or topic branch on `master`.
+3. Start an interactive rebase of the PR or topic branch on `target`.
 4. If merging a PR, append `[close #<PR number>]` to the last commit message so
    that Github will close the pull request when the merged commits are pushed.
-5. Fast-forward merge the rebased branch into `master`.
-6. Push `master` to the remote repository.
+5. Fast-forward merge the rebased branch into `target`.
+6. Push `target` to the `remote` repository.
+
+Note:
+
+* `remote` defaults to `"origin"` (configurable; see below)
+* `target` defaults to `"master"`
 
 ## Usage
 
 ```
-git land [pull request number]
-git land [branch]
+git land [<remote>] <pull request number>[:<target>]
+git land [<remote>] <branch>[:<target>]
 ```
 
 ### Examples
 
 ```sh
 git land 123
-```
-
-```sh
 git land my-topic-branch
+git land origin 42:target-branch
+git land origin feature-branch:target-branch
 ```
 
 ## Installation
@@ -54,7 +58,7 @@ git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*
 ### Configuring remote name
 
 By default, `git-land` assumes the remote repository is pointed to by the git
-remote `origin`. To use a different git remote, set the `git-land.remote`
+remote `origin`. To use a different default git remote, set the `git-land.remote`
 option. For example, to use a remote named `upstream`:
 
 ```sh
