@@ -74,6 +74,7 @@ from which I cribbed the format and some content for this README.
 
 - [Lon Ingram][lawnsea]
 - [Reason][reason]
+- [John Roesler][vvcephei]
 
 ## License
 
