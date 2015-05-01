@@ -56,8 +56,13 @@ if [ -z "$remote" ]; then
   remote='origin'
 fi
 
+# set target branch, defaulting to master
+target_branch=$(git config git-land.target)
+if [ -z "$target_branch" ]; then
+  target_branch='master'
+fi
+
 merge_branch=""
-target_branch="master"
 
 case ${#args[@]} in
   0)
