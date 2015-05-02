@@ -73,6 +73,7 @@ from which I cribbed the format and some content for this README.
 ## Contributors
 
 - [Lon Ingram][lawnsea]
+- [Taka Kojima][gigafied]
 - [Reason][reason]
 - [John Roesler][vvcephei]
 
@@ -82,6 +83,8 @@ Copyright 2015 Bazaarvoice, Inc. Licensed under Apache 2.0
 
 http://www.apache.org/licenses/LICENSE-2.0
 
+[gigafied]: https://github.com/gigafied
 [lawnsea]: https://github.com/lawnsea
 [paulirish]: https://github.com/paulirish
 [reason]: https://github.com/reason-bv
+[vvcephei]: https://github.com/vvcephei
