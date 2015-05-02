@@ -55,7 +55,9 @@ occurences of `origin` with the name of the git remote if necessary.
 git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*'
 ```
 
-### Configuring remote name
+### Configuration
+
+#### Remote repository
 
 By default, `git-land` assumes the remote repository is pointed to by the git
 remote `origin`. To use a different default git remote, set the `git-land.remote`
@@ -63,6 +65,17 @@ option. For example, to use a remote named `upstream`:
 
 ```sh
 git config git-land.remote upstream
+```
+
+#### Target branch
+
+By default, `git-land` merges the branch or pull request into `master` if no
+target branch is specified. To use a different default target branch, set the
+`git-land.target` option. For example, to use a default target branch named
+`dev`:
+
+```sh
+git config git-land.target dev
 ```
 
 ## Thanks
