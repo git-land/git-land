@@ -36,6 +36,15 @@ git land origin feature-branch:target-branch
 
 ## Installation
 
+### NPM (recommended)
+
+You can install git-land using npm install.
+```sh
+npm install --global git-land
+```
+
+### Manual Installation
+
 Put the bash script in a folder that is in your `PATH` and make it executable.
 For example, to install it to `~/bin/`, do the following:
 
