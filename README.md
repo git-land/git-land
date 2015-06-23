@@ -98,6 +98,7 @@ from which I cribbed the format and some content for this README.
 - [Taka Kojima][gigafied]
 - [Reason][reason]
 - [John Roesler][vvcephei]
+- [Taylor McKinney][taylormck]
 
 ## License
 
@@ -109,4 +110,5 @@ http://www.apache.org/licenses/LICENSE-2.0
 [lawnsea]: https://github.com/lawnsea
 [paulirish]: https://github.com/paulirish
 [reason]: https://github.com/reason-bv
+[taylormck]: https://github.com/taylormck
 [vvcephei]: https://github.com/vvcephei
