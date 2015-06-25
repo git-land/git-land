@@ -1,4 +1,5 @@
 # git-land
+[![Build Status](https://travis-ci.org/git-land/git-land.svg?branch=master)](https://travis-ci.org/git-land/git-land)
 
 This is a git extension that merges a pull request or topic branch via rebasing
 so as to avoid a merge commit. To merge a PR or branch, the script does the
