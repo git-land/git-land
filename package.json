@@ -5,7 +5,7 @@
   "main": "git-land",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bazaarvoice/git-land.git"
+    "url": "git://github.com/git-land/git-land.git"
   },
   "keywords": [
     "git",
@@ -14,7 +14,7 @@
   "bin": {
     "git-land": "git-land"
   },
-  "author": "Lon Ingram <lon.ingram@bazaarvoice.com>",
+  "author": "Lon Ingram <lawnsea@gmail.com>",
   "contributors": [{
       "name": "Taka Kojima"
     }, {
