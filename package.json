@@ -1,6 +1,6 @@
 {
   "name": "git-land",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Merges a pull request or topic branch via rebasing to avoid a merge commit.",
   "main": "git-land",
   "repository": {
