@@ -3,7 +3,8 @@
 # This is a git extension that merges a pull request or topic branch via
 # rebasing so as to avoid a merge commit.
 #
-# Copyright 2015 Bazaarvoice, Inc. Licensed under Apache 2.0
+# Copyright 2015 Bazaarvoice, Inc., RetailMeNot, Inc., and git-land contributors
+# Licensed under Apache 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
 
 project_root=`echo $(git rev-parse --show-toplevel)`

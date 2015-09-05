@@ -103,7 +103,8 @@ from which I cribbed the format and some content for this README.
 
 ## License
 
-Copyright 2015 Bazaarvoice, Inc. Licensed under Apache 2.0
+Copyright 2015 Bazaarvoice, Inc., RetailMeNot, Inc., and git-land contributors
+Licensed under Apache 2.0
 
 http://www.apache.org/licenses/LICENSE-2.0
 
