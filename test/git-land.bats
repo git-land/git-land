@@ -116,3 +116,186 @@ load setup
 
   [ "$origin_log" = "$local_log" ]
 }
+
+@test "'git land origin feature-branch:master' does not push feature-branch to origin" {
+  enter_repo "local"
+
+  run bash -c "yes | git land origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should not have a branch named 'feature-branch'
+  [[ ! $origin_branches =~ 'feature-branch' ]]
+}
+
+# --force-push-topic
+# -----------------------------------------------------------------------------
+@test "'git land --force-push-topic origin feature-branch:master' pushes feature-branch to origin" {
+  enter_repo "local"
+
+  run bash -c "yes | git land --force-push-topic origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should have a branch named 'feature-branch'
+  [[ $origin_branches =~ 'feature-branch' ]]
+}
+
+@test "'git land --force-push-topic origin feature-branch:master' force pushes feature-branch to origin" {
+  # create a feature-branch in origin
+  clone_repo "origin" "local-two"
+  enter_repo "local-two"
+  run git checkout -b feature-branch
+  write_commit "a different feature commit" "feature.txt"
+  run git push origin feature-branch
+
+  enter_repo "local"
+
+  run bash -c "yes | git land --force-push-topic origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  # origin/feature-branch should be a clone of local/feature-branch
+  local_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  enter_repo "origin"
+  origin_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  [ "$origin_log" = "$local_log" ]
+}
+
+@test "exits with an error if asked to force push a pull request" {
+  skip "FIXME: always passes because the tests don't support PRs yet"
+  enter_repo "local"
+
+  run bash -c "yes | git land --force-push-topic origin 123:master"
+  [ $status -eq 1 ]
+}
+
+# -f
+# -----------------------------------------------------------------------------
+@test "'git land -f origin feature-branch:master' pushes feature-branch to origin" {
+  enter_repo "local"
+
+  run bash -c "yes | git land -f origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should have a branch named 'feature-branch'
+  [[ $origin_branches =~ 'feature-branch' ]]
+}
+
+@test "'git land -f origin feature-branch:master' force pushes feature-branch to origin" {
+  # create a feature-branch in origin
+  clone_repo "origin" "local-two"
+  enter_repo "local-two"
+  run git checkout -b feature-branch
+  write_commit "a different feature commit" "feature.txt"
+  run git push origin feature-branch
+
+  enter_repo "local"
+
+  run bash -c "yes | git land -f origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  # origin/feature-branch should be a clone of local/feature-branch
+  local_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  enter_repo "origin"
+  origin_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  [ "$origin_log" = "$local_log" ]
+}
+
+@test "exits with an error if asked to force push a pull request" {
+  skip "FIXME: always passes because the tests don't support PRs yet"
+  enter_repo "local"
+
+  run bash -c "yes | git land -f origin 123:master"
+  [ $status -eq 1 ]
+}
+
+# force-push-topic config
+# -----------------------------------------------------------------------------
+@test "with force-push-topic set to true, 'git land origin feature-branch:master' pushes feature-branch to origin" {
+  enter_repo "local"
+  run git config git-land.force-push-topic true
+
+  run bash -c "yes | git land origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should have a branch named 'feature-branch'
+  [[ $origin_branches =~ 'feature-branch' ]]
+}
+
+@test "with force-push-topic set to true, 'git land --force-push-topic origin feature-branch:master' force pushes feature-branch to origin" {
+  # create a feature-branch in origin
+  clone_repo "origin" "local-two"
+  enter_repo "local-two"
+  run git checkout -b feature-branch
+  write_commit "a different feature commit" "feature.txt"
+  run git push origin feature-branch
+
+  enter_repo "local"
+  run git config git-land.force-push-topic true
+
+  run bash -c "yes | git land origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  # origin/feature-branch should be a clone of local/feature-branch
+  local_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  enter_repo "origin"
+  origin_log=`git log feature-branch --pretty=format:"%h %s"`
+
+  [ "$origin_log" = "$local_log" ]
+}
+
+@test "with force-push-topic set to true, exits with an error if asked to force push a pull request" {
+  skip "FIXME: always passes because the tests don't support PRs yet"
+  enter_repo "local"
+  run git config git-land.force-push-topic true
+
+  run bash -c "yes | git land origin 123:master"
+  [ $status -ne 0 ]
+}
+
+# --no-force-push-topic
+# -----------------------------------------------------------------------------
+@test "'git land --no-force-push-topic origin feature-branch:master' does not push feature-branch to origin" {
+  enter_repo "local"
+  run git config git-land.force-push-topic false
+
+  run bash -c "yes | git land --no-force-push-topic origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should not have a branch named 'feature-branch'
+  [[ ! $origin_branches =~ 'feature-branch' ]]
+}
+
+# -F
+# -----------------------------------------------------------------------------
+@test "'git land -F origin feature-branch:master' does not push feature-branch to origin" {
+  enter_repo "local"
+  run git config git-land.force-push-topic true
+
+  run bash -c "yes | git land -F origin feature-branch:master"
+  [ $status -eq 0 ]
+
+  enter_repo "origin"
+  origin_branches=`git branch`
+
+  # origin should not have a branch named 'feature-branch'
+  [[ ! $origin_branches =~ 'feature-branch' ]]
+}

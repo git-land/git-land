@@ -24,13 +24,17 @@ function exit_and_cleanup() {
 function usage() {
   echo "$1"
   echo ""
-  echo "Usage: git land [<remote>] <pull request number>[:<target branch>]"
-  echo "       git land [<remote>] <branch>[:<target branch>]"
+  echo "Usage: git land [options] [<remote>] <pull request number>[:<target branch>]"
+  echo "       git land [options] [<remote>] <branch>[:<target branch>]"
   echo ""
-  echo " <remote>: the remote repo (default: origin)"
-  echo " <pull request number>: a pull request to merge and close"
-  echo " <branch>: a branch to merge and close"
-  echo " <target branch>: the branch to merge to (default: master)"
+  echo "  <remote>: the remote repo (default: origin)"
+  echo "  <pull request number>: a pull request to merge and close"
+  echo "  <branch>: a branch to merge and close"
+  echo "  <target branch>: the branch to merge to (default: master)"
+  echo ""
+  echo "Options:"
+  echo "  -f, --force-push-topic: force push <branch> to <remote> after rebasing"
+  echo "  -F, --no-force-push-topic: do not force push <branch> to <remote> after rebasing"
   echo ""
   echo "Examples:"
   echo "  git land origin 23:master"
@@ -39,20 +43,6 @@ function usage() {
   echo ""
   exit_and_cleanup 1
 }
-
-
-args=()
-# Parse args
-while [[ $# > 0 ]]; do
-  arg="$1"
-
-  case $arg in
-    *)
-      args[${#args[@]}]=$arg
-      shift
-      ;;
-  esac
-done
 
 # set upstream remote, defaulting to origin
 remote=$(git config git-land.remote)
@@ -65,6 +55,32 @@ target_branch=$(git config git-land.target)
 if [ -z "$target_branch" ]; then
   target_branch='master'
 fi
+
+# are we configured to force push after rebasing?
+force_push_topic=$(git config --bool git-land.force-push-topic)
+[[ "$force_push_topic" = 'true' ]] \
+  && force_push_topic=true || force_push_topic=false
+
+args=()
+# Parse args
+while [[ $# > 0 ]]; do
+  arg="$1"
+
+  case $arg in
+    -f|--force-push-topic)
+      force_push_topic=true
+      shift
+      ;;
+    -F|--no-force-push-topic)
+      force_push_topic=false
+      shift
+      ;;
+    *)
+      args[${#args[@]}]=$arg
+      shift
+      ;;
+  esac
+done
 
 merge_branch=""
 
@@ -94,6 +110,10 @@ fi
 
 # set merge branch if merging a PR
 if [[ $merge_branch =~ ^[0-9]+$ ]]; then
+  if [ "$force_push_topic" = true ]; then
+    exit_and_cleanup 1 "Cannot force push a PR (https://help.github.com/articles/checking-out-pull-requests-locally/#tips)"
+  fi
+
   pr=$merge_branch
   merge_branch="$remote/pr/$pr"
 fi
@@ -123,6 +143,11 @@ if [ -n "$pr" ]; then
       echo "Could not append commit message tag to close #$pr"
     fi
   fi
+fi
+
+# optionally force push source branch to origin
+if [ "$force_push_topic" = true ]; then
+  git push -f $remote $merge_branch
 fi
 
 # merge the PR and push

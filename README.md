@@ -22,8 +22,8 @@ Note:
 ## Usage
 
 ```
-git land [<remote>] <pull request number>[:<target>]
-git land [<remote>] <branch>[:<target>]
+git land [options] [<remote>] <pull request number>[:<target>]
+git land [options] [<remote>] <branch>[:<target>]
 ```
 
 ### Examples
@@ -34,6 +34,21 @@ git land my-topic-branch
 git land origin 42:target-branch
 git land origin feature-branch:target-branch
 ```
+
+### Options
+
+#### `-f, --force-push-topic`: force push rebased topic branch
+
+If this option is specified, `git-land` will force push the rebased topic branch
+request to the `remote` repository. [Pull request branches are
+read-only][read-only-pulls], so git-land exits with an error if invoked with a
+pull request number and this option specified.
+
+#### `-F, --no-force-push-topic`: do not force push rebased topic branch
+
+If this option is specified, `git-land` will not force push the rebased topic
+branch request to the `remote` repository, even if configured to do so by
+default.
 
 ## Installation
 
@@ -88,6 +103,17 @@ target branch is specified. To use a different default target branch, set the
 git config git-land.target dev
 ```
 
+#### Whether to force push the topic branch
+
+By default, `git-land` does nothing with the topic branch after rebasing it
+locally. Specifying the `--force-push-topic` option overrides this behavior,
+force pushing the rebased topic branch to the target remote. To make this
+behavior the default, set the `git-land.force-push-topic` option to `true`:
+
+```sh
+git config git-land.force-push-topic true
+```
+
 ## Thanks
 
 Thanks to [@paulirish][paulirish] for [git-open](https://github.com/paulirish/git-open),
@@ -114,3 +140,5 @@ http://www.apache.org/licenses/LICENSE-2.0
 [reason]: https://github.com/reason-bv
 [taylormck]: https://github.com/taylormck
 [vvcephei]: https://github.com/vvcephei
+
+[read-only-pulls]: https://help.github.com/articles/checking-out-pull-requests-locally/#tips
