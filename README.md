@@ -65,7 +65,7 @@ Put the bash script in a folder that is in your `PATH` and make it executable.
 For example, to install it to `~/bin/`, do the following:
 
 ```sh
-curl -o ~/bin/git-land https://raw.githubusercontent.com/bazaarvoice/git-land/master/git-land
+curl -o ~/bin/git-land https://raw.githubusercontent.com/git-land/git-land/master/git-land
 chmod +x ~/bin/git-land
 ```
 
