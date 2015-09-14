@@ -8,8 +8,14 @@ fixture_root="$project_root/scratch"
 setup() {
   cd $project_root
 
-  git config --global user.email "bats@example.com"
-  git config --global user.name "a user"
+  # git commands fail when these aren't set, which they aren't in travis
+  if ! git config --get --global user.email; then
+    git config --global user.email "bats@example.com"
+  fi
+
+  if ! git config --get --global user.name; then
+    git config --global user.name "a user"
+  fi
 
   # initialize origin
   init_repo "origin"
