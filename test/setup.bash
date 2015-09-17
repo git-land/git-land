@@ -73,3 +73,8 @@ function write_commit() {
 function enter_repo() {
   cd $fixture_root/$1
 }
+
+function contains() {
+  [[ "$1" =~ "$2" ]] || \
+    echo "expected '$1' to contain '$2'" >&2 && exit 1
+}

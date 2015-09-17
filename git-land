@@ -123,6 +123,11 @@ if [[ ! ($response = '' || $response =~ ^([yY][eE][sS]|[yY])$) ]]; then
   exit_and_cleanup 1
 fi
 
+if [ -x "$project_root/.git/hooks/pre-land" ]; then
+  $project_root/.git/hooks/pre-land || \
+    exit_and_cleanup $? "pre-land hook returned a non-zero error code"
+fi
+
 # sync local $target_branch with latest on github
 (git checkout $target_branch && \
   git fetch $remote && \

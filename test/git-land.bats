@@ -35,11 +35,11 @@ load setup
   [ $status -eq 0 ]
 
   run git log --pretty=format:"%s"
-  [[ "${lines[0]}" =~ 'second feature commit' ]]
-  [[ "${lines[1]}" =~ 'first feature commit' ]]
-  [[ "${lines[2]}" =~ 'third master commit' ]]
-  [[ "${lines[3]}" =~ 'second master commit' ]]
-  [[ "${lines[4]}" =~ 'first master commit' ]]
+  [ "${lines[0]}" = "wrote 'second feature commit' to feature.txt" ]
+  [ "${lines[1]}" = "wrote 'first feature commit' to feature.txt" ]
+  [ "${lines[2]}" = "wrote 'third master commit' to master.txt" ]
+  [ "${lines[3]}" = "wrote 'second master commit' to master.txt" ]
+  [ "${lines[4]}" = "wrote 'first master commit' to master.txt" ]
 }
 
 @test "'git land origin feature-branch:master' aborts and exits with an error if updating the target branch fails" {
@@ -97,10 +97,10 @@ load setup
   [ $status -eq 0 ]
 
   run git log --pretty=format:"%s"
-  [[ "${lines[0]}" =~ 'second feature commit' ]]
-  [[ "${lines[1]}" =~ 'first feature commit' ]]
-  [[ "${lines[2]}" =~ 'second master commit' ]]
-  [[ "${lines[3]}" =~ 'first master commit' ]]
+  [ "${lines[0]}" = "wrote 'second feature commit' to feature.txt" ]
+  [ "${lines[1]}" = "wrote 'first feature commit' to feature.txt" ]
+  [ "${lines[2]}" = "wrote 'second master commit' to master.txt" ]
+  [ "${lines[3]}" = "wrote 'first master commit' to master.txt" ]
 }
 
 @test "'git land origin feature-branch:master' pushes local master to origin" {
