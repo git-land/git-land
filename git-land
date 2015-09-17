@@ -124,7 +124,7 @@ if [[ ! ($response = '' || $response =~ ^([yY][eE][sS]|[yY])$) ]]; then
 fi
 
 if [ -x "$project_root/.git/hooks/pre-land" ]; then
-  $project_root/.git/hooks/pre-land || \
+  $project_root/.git/hooks/pre-land $merge_branch $target_branch $remote || \
     exit_and_cleanup $? "pre-land hook returned a non-zero error code"
 fi
 
@@ -162,4 +162,10 @@ head=$(git rev-parse HEAD)
     exit_and_cleanup $? "Could not fast-forward merge $merge_branch into $target_branch"
 
 git push $remote $target_branch
+
+if [ -x "$project_root/.git/hooks/post-land" ]; then
+  $project_root/.git/hooks/post-land $merge_branch $target_branch $remote || \
+    exit_and_cleanup $? "post-land hook returned a non-zero error code"
+fi
+
 exit_and_cleanup $?
