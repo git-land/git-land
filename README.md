@@ -126,6 +126,7 @@ from which I cribbed the format and some content for this README.
 - [Reason][reason]
 - [John Roesler][vvcephei]
 - [Taylor McKinney][taylormck]
+- [Brian Sinclair][brianarn]
 
 ## License
 
@@ -134,6 +135,7 @@ Licensed under Apache 2.0
 
 http://www.apache.org/licenses/LICENSE-2.0
 
+[brianarn]: https://github.com/brianarn
 [gigafied]: https://github.com/gigafied
 [lawnsea]: https://github.com/lawnsea
 [paulirish]: https://github.com/paulirish
