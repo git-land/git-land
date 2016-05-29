@@ -161,7 +161,8 @@ head=$(git rev-parse HEAD)
   git merge --ff-only $head) || \
     exit_and_cleanup $? "Could not fast-forward merge $merge_branch into $target_branch"
 
-git push $remote $target_branch
+git push $remote $target_branch || \
+  exit_and_cleanup $? "Could not push $target_branch to $remote"
 
 if [ -x "$project_root/.git/hooks/post-land" ]; then
   $project_root/.git/hooks/post-land $merge_branch $target_branch $remote || \
