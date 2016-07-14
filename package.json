@@ -1,6 +1,6 @@
 {
   "name": "git-land",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Merges a pull request or topic branch via rebasing to avoid a merge commit.",
   "main": "git-land",
   "repository": {
@@ -15,15 +15,19 @@
     "git-land": "git-land"
   },
   "author": "Lon Ingram <lawnsea@gmail.com>",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Taka Kojima"
-    }, {
+    },
+    {
       "name": "Reason",
       "email": "reason.reason@bazaarvoice.com"
-    }, {
+    },
+    {
       "name": "John Roesler",
       "email": "john.roesler@bazaarvoice.com"
-    }, {
+    },
+    {
       "name": "Taylor McKinney",
       "email": "taylor.mckinney@bazaarvoice.com"
     }
